@@ -1,17 +1,27 @@
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+A representation of an X2 Block game board. Game rules are applied
+to add tiles effectively.
+@author Valeria Garcia
+ */
 public class Board {
+
     private Num[][] board;
     private int[] nextAvailable;
     private SortedSet<Integer> set= new TreeSet<Integer>();
-
 
     public Board(){
         board= new Num[7][5];
         nextAvailable= new int[5];
     }
 
+    /**
+     * Adds a tile to the game board
+     * @param item A tile to be added to the boars
+     * @param col Column in which tile will be added
+     */
     public void addNum(Num item, int col){
         set.add(item.getAmount());
         board[nextAvailable[col]][col]= item;
@@ -19,6 +29,11 @@ public class Board {
         minimizeBoard(col);
     }
 
+    /**
+     * Applies game rules to the added tile. Merges appropriate cells
+     together.
+     * @param start Column in which the tile was originally added.
+     */
     private void minimizeBoard(int start) {
         int i=nextAvailable[start]-1, j=start;
         while (i<7){
@@ -60,6 +75,9 @@ public class Board {
         }
     }
 
+    /**
+    Refreshes game board to avoid empty gaps.
+     */
     private void orderBoard() {
         for (int i=0; i<5; i++){
             for (int j=0; j<7; j++){
@@ -73,6 +91,9 @@ public class Board {
         }
     }
 
+    /**
+    Prints the game board for debugging purposes.
+     */
     public void printBoard(){
         for (Num[] x: board){
             for (Num y: x){
@@ -85,10 +106,18 @@ public class Board {
         }
     }
 
+    /**
+     * Returns the biggest tile in the game board.
+     * @return The largest tile number
+     */
     public int largestTile(){
         return set.last();
     }
 
+    /**
+     * Deletes the smallest tile when a new tile becomes available.
+     * @param check The smallest tile to be deleted.
+     */
     public void delete(int check) {
         for (int i=0; i<5; i++){
             for (int j=0; j<7; j++){

@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+A simple implementation of a command-line version of gameplay.
+@author Valeria Garcia
+ */
 public class TerminalPlay {
     public static void main(String[] args) {
         Board board= new Board();
@@ -13,9 +17,9 @@ public class TerminalPlay {
             String col= scan.nextLine();
             board.addNum(new Num(n), Integer.parseInt(col));
             int check= tiles.growTilePile(board.largestTile());
+            //check if a new tile has been unlocked
             if (check!=0){ board.delete(check);}
             board.printBoard();
-            //tiles.printTiles();
         }
     }
 }
